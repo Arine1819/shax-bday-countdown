@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday My Saku</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Great+Vibes&display=swap" rel="stylesheet">
+
+    <!-- Fireworks Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.15);
+            backdrop-filter: blur(12px);
+            border-radius: 25px;
+            padding: 30px 20px;
+            max-width: 800px;
+            width: 100%;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+        }
+
+        #countdown {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .time-box {
+            background: rgba(255, 255, 255, 0.25);
+            border-radius: 15px;
+            padding: 15px;
+        }
+
+        .time-box span {
+            display: block;
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        .time-box small {
+            font-size: 0.9rem;
+        }
+
+        .message {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .buttons {
+            margin-top: 25px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .buttons button {
+            background: #ff6f91;
+            border: none;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: transform 0.2s, background 0.3s;
+        }
+
+        .buttons button:hover {
+            transform: scale(1.05);
+            background: #ff3e6c;
+        }
+
+        #popup {
+            margin-top: 20px;
+            font-size: 1.1rem;
+            background: rgba(255, 255, 255, 0.2);
+            padding: 15px;
+            border-radius: 15px;
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            #countdown {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .time-box span {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Happy Birthday, My Love of my life My Saku 💖</h1>
+        <div class="subtitle">Counting down to your magical day...</div>
+
+        <div id="countdown">
+            <div class="time-box"><span id="days">0</span><small>Days</small></div>
+            <div class="time-box"><span id="hours">0</span><small>Hours</small></div>
+            <div class="time-box"><span id="minutes">0</span><small>Minutes</small></div>
+            <div class="time-box"><span id="seconds">0</span><small>Seconds</small></div>
+        </div>
+
+        <div class="message">
+            “My dearest Saku, every moment with you is a blessing for me. 
+            You are the reason behind my smile and the happiness in my heart. 
+            I can't wait to celebrate your special day. I love you endlessly.” 💕
+        </div>
+
+        <div class="buttons">
+            <button onclick="showMessage(0)">Why I Love You 💖</button>
+            <button onclick="showMessage(1)">Our Memories 📸</button>
+            <button onclick="showMessage(2)">A Special Wish 🌹</button>
+            <button onclick="showMessage(3)">Open When You Smile 💖 </button>
+        </div>
+
+        <div id="popup"></div>
+    </div>
+
+    <script>
+        const birthday = new Date("2026-04-11T00:00:00").getTime();
+
+        const messages = [
+            "I love you because your smile brightens my darkest days and your presence makes everything feel like home. 💖",
+            "Every memory with you is my favorite, our laughs, our talks, and every little moment we share meri jaan. 📸",
+            "On your birthday, I wish you endless happiness, success, and love. You deserve the entire universe, my Saku. 🌹",
+            "Whenever you smile, my world lights up. Keep smiling, because your happiness means everything to me. 😊"
+        ];
+
+        function showMessage(index) {
+            const popup = document.getElementById("popup");
+            popup.innerText = messages[index];
+            popup.style.display = "block";
+        }
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = birthday - now;
+
+            if (distance <= 0) {
+                document.getElementById("countdown").innerHTML =
+                    "<h2>🎉 Happy Birthday, My Saku! 🎂💖</h2>";
+                launchFireworks();
+                clearInterval(timerInterval);
+                return;
+            }
+
+            document.getElementById("days").innerText =
+                Math.floor(distance / (1000 * 60 * 60 * 24));
+            document.getElementById("hours").innerText =
+                Math.floor((distance / (1000 * 60 * 60)) % 24);
+            document.getElementById("minutes").innerText =
+                Math.floor((distance / (1000 * 60)) % 60);
+            document.getElementById("seconds").innerText =
+                Math.floor((distance / 1000) % 60);
+        }
+
+        function launchFireworks() {
+            const duration = 8 * 1000;
+            const end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 5,
+                    angle: 60,
+                    spread: 55,
+                    origin: { x: 0 }
+                });
+                confetti({
+                    particleCount: 5,
+                    angle: 120,
+                    spread: 55,
+                    origin: { x: 1 }
+                });
+
+                if (Date.now() < end) {
+                    requestAnimationFrame(frame);
+                }
+            })();
+        }
+
+        const timerInterval = setInterval(updateCountdown, 1000);
+        updateCountdown();
+    </script>
+</body>
+</html>
